@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A0E13">
+<meta name="robots" content="noindex,nofollow">
+<title>Material order</title>
+<style>
+:root{--bg:#0A0E13;--panel:#121923;--panel-2:#17202C;--line:#223042;--line-2:#2C3D52;--fg:#E4ECF4;--muted:#8597AB;--dim:#5C6E82;
+  --accent:#3CCFDD;--ink:#03252A;--soft:rgba(60,207,221,.12);--ok:#3DD68C;--warn:#F2B544;--bad:#FF6B6B;--teams:#7B83EB;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{font-size:16px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:0 max(14px,env(safe-area-inset-right)) calc(110px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+header{position:sticky;top:0;z-index:5;background:rgba(10,14,19,.94);backdrop-filter:blur(8px);margin:0 -14px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;border-bottom:1px solid var(--line)}
+.hrow{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:9px;min-width:0}
+.brand b{font-size:17px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{display:block;font-size:11px;color:var(--dim)}
+.me{background:var(--panel);border:1px solid var(--line-2);border-radius:20px;padding:5px 11px;font-size:13px;color:var(--muted);white-space:nowrap;cursor:pointer;max-width:48%;overflow:hidden;text-overflow:ellipsis}
+.search{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line-2);border-radius:11px;padding:0 12px;margin-top:10px}
+.search:focus-within{border-color:var(--accent)}
+.search input{flex:1;min-width:0;background:none;border:0;outline:0;padding:11px 0}
+.search .clr{background:none;border:0;color:var(--dim);font-size:20px;line-height:1;padding:4px;cursor:pointer}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:20px;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-size:13px;cursor:pointer}
+.chip[aria-pressed=true]{color:var(--fg);border-color:var(--accent);background:var(--soft)}
+.chip i{width:8px;height:8px;border-radius:50%}
+.list{display:flex;flex-direction:column;margin-top:8px}
+.it{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid var(--line)}
+.it.on .nm{color:var(--accent)}
+.it-t{flex:1;min-width:0}
+.nm{font-weight:600;overflow-wrap:anywhere}
+.sub{font-size:12.5px;color:var(--dim)}
+.sku{font:600 12px ui-monospace,"SFMono-Regular",Consolas,monospace;color:var(--accent)}
+.st{font-weight:600}.st.k0{color:var(--bad)}.st.k1{color:var(--warn)}.st.k2{color:var(--ok)}
+.add{background:var(--panel-2);border:1px solid var(--line-2);border-radius:9px;padding:8px 14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.step{display:flex;align-items:center;border:1px solid var(--accent);border-radius:9px;overflow:hidden;flex:none}
+.step button{width:38px;height:38px;background:var(--soft);border:0;color:var(--accent);font-size:20px;font-weight:600;cursor:pointer}
+.step input{width:58px;height:38px;text-align:center;background:var(--bg);border:0;border-inline:1px solid var(--line-2);font-weight:700;-moz-appearance:textfield}
+.step input::-webkit-outer-spin-button,.step input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.more{padding:16px 4px;color:var(--muted);font-size:13.5px;text-align:center}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:6;background:rgba(18,25,35,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line-2);padding:10px max(14px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+.bar .in{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;justify-content:space-between}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line-2);background:var(--panel-2);padding:12px 16px;border-radius:11px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--fg)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.btn.teams{background:var(--teams);border-color:var(--teams);color:#fff}
+.btn.ghost{background:none}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.45}
+h2{font-size:20px;margin:16px 0 4px;letter-spacing:-.01em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:12px}
+.f{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.f label{font-size:12.5px;color:var(--muted);font-weight:600}
+.f input,.f select,.f textarea{background:var(--bg);border:1px solid var(--line-2);border-radius:10px;padding:11px 12px;width:100%}
+.f input:focus,.f select:focus,.f textarea:focus{outline:0;border-color:var(--accent)}
+.f textarea{min-height:76px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:84px;background:var(--bg);border:1px solid var(--line-2);border-radius:10px;padding:10px;cursor:pointer;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed=true]{border-color:var(--accent);color:var(--fg);background:var(--soft)}
+.sends{display:grid;gap:10px;margin-top:16px}
+.rm{background:none;border:0;color:var(--dim);font-size:13px;cursor:pointer;padding:6px;text-decoration:underline}
+.note{font-size:13px;color:var(--muted)}
+.ok{color:var(--ok)}
+.tag.nw{background:rgba(61,214,140,.14);color:var(--ok)}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px;background:rgba(242,181,68,.14);color:var(--warn);margin-left:4px;vertical-align:1px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td{padding:9px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+td.q{text-align:right;white-space:nowrap;font-weight:700}
+.big{font-size:42px;line-height:1}
+.code{font:12px ui-monospace,Consolas,monospace;background:var(--bg);border:1px solid var(--line-2);border-radius:8px;padding:10px;overflow-wrap:anywhere;color:var(--muted);max-height:96px;overflow:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom));background:var(--panel-2);border:1px solid var(--line-2);padding:10px 16px;border-radius:10px;font-size:14px;z-index:20;box-shadow:0 10px 30px rgba(0,0,0,.5);max-width:90vw}
+.hist{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div id="bar"></div>
+<script>
+(() => {
+"use strict";
+/* Strandline fills this in when you click "Save tech page". */
+let DATA = {"v":1,"generatedAt":1794445353673,"company":"kdizzle warehouse","emails":"cdsmith@antietambroadband.com","phones":"","teams":"cdsmith@antietambroadband.com","url":"","stock":"status","cats":[{"id":"maint","n":"Maintenance","col":"#2F7DE1"},{"id":"constr","n":"Construction","col":"#F28C28"},{"id":"cpe","n":"CPE","col":"#2EB872"},{"id":"install","n":"Installation","col":"#A0704A"},{"id":"managed","n":"Managed Services","col":"#8C9BAB"},{"id":"fiber","n":"Fiber","col":"#E8ECF1"}],"techs":[],"items":[{"s":"CPE-90001","n":"DOCSIS 3.1 modem","c":"cpe","u":"ea","k":2},{"s":"INS-90002","n":"F-connector compression, RG6","c":"install","u":"bag","k":1},{"s":"FIB-90001","n":"Fiber drop cable, 2F flat, black","c":"fiber","u":"ft","k":1},{"s":"FIB-90003","n":"Fiber splice closure, 24F dome","c":"fiber","u":"ea","k":2},{"s":"INS-90003","n":"Ground block, single","c":"install","u":"ea","k":2},{"s":"MNT-90002","n":"Hardline splice connector, .625","c":"maint","u":"ea","k":2},{"s":"CON-90002","n":"Innerduct, 1.25 in orange","c":"constr","u":"ft","k":2},{"s":"MNT-90001","n":"Line extender amplifier, 1.2 GHz","c":"maint","u":"ea","k":2},{"s":"MGS-90001","n":"Managed switch, 8-port PoE","c":"managed","u":"ea","k":2},{"s":"CON-90001","n":"Pedestal, 10 x 10 x 24","c":"constr","u":"ea","k":0},{"s":"INS-90001","n":"RG6 quad shield, 1000 ft","c":"install","u":"box","k":2},{"s":"FIB-90002","n":"SC/APC fast connector","c":"fiber","u":"ea","k":1},{"s":"CPE-90002","n":"Wi-Fi 6 gateway","c":"cpe","u":"ea","k":1}]};
+const DEMO = !DATA;
+if (DEMO) DATA = {v:1, generatedAt:Date.now(), company:"Preview", emails:"warehouse@example.com", phones:"3015550100", teams:"warehouse@example.com", stock:"status",
+  cats:[{id:"cpe",n:"CPE",col:"#2EB872"},{id:"fiber",n:"Fiber",col:"#E8ECF1"},{id:"install",n:"Installation",col:"#A0704A"}],
+  techs:[{n:"812",m:"Sample Tech"}],
+  items:[{s:"CPE-90001",n:"DOCSIS 3.1 modem",c:"cpe",u:"ea",k:2},{s:"CPE-90002",n:"Wi-Fi 6 gateway",c:"cpe",u:"ea",k:1},{s:"FIB-90001",n:"Fiber drop cable, 2F flat, black",c:"fiber",u:"ft",k:2},{s:"FIB-90002",n:"SC/APC fast connector",c:"fiber",u:"ea",k:0,p:"SCAPC-FC"},{s:"INS-90001",n:"RG6 quad shield, 1000 ft",c:"install",u:"box",k:2}]};
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = n => (Number(n)||0).toLocaleString("en-US",{maximumFractionDigits:2});
+const ls = {get(k, d){ try { const v = localStorage.getItem("strandline." + k); return v == null ? d : JSON.parse(v); } catch(e){ return d; } },
+            set(k, v){ try { localStorage.setItem("strandline." + k, JSON.stringify(v)); } catch(e){} }};
+const dayStr = (off = 0) => { const d = new Date(); d.setDate(d.getDate() + off); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
+const fmtDay = d => { if (!d) return ""; const x = new Date(d + "T12:00:00"); return isNaN(x) ? d : x.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}); };
+const b64u = s => btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const unb64u = s => { s = s.replace(/-/g,"+").replace(/_/g,"/"); while (s.length % 4) s += "="; return decodeURIComponent(escape(atob(s))); };
+const newId = () => { const a = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789"; let s = ""; const r = (window.crypto && crypto.getRandomValues) ? crypto.getRandomValues(new Uint8Array(12)) : Array.from({length:12}, () => Math.random()*256|0); for (const x of r) s += a[x % a.length]; return s; };
+const split = v => String(v||"").split(/[,;\s]+/).map(x => x.trim()).filter(Boolean);
+function toast(msg){ const el = document.createElement("div"); el.className = "toast"; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 2600); }
+async function copy(text){
+  if (navigator.clipboard && window.isSecureContext){ try { await navigator.clipboard.writeText(text); return true; } catch(e){} }
+  const t = document.createElement("textarea"); t.value = text; t.setAttribute("aria-hidden", "true");
+  t.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;opacity:.01;font-size:16px";
+  document.body.appendChild(t); t.focus(); t.select(); try { t.setSelectionRange(0, text.length); } catch(e){}
+  let ok = false; try { ok = document.execCommand("copy"); } catch(e){} t.remove(); return ok;
+}
+const BY_SKU = new Map(DATA.items.map(it => [it.s, it]));
+const CAT = new Map((DATA.cats||[]).map(c => [c.id, c]));
+const NEWN = DATA.items.filter(it => it.nw).length;
+const stockTxt = it => DATA.stock === "qty" && it.q != null ? `<span class="st ${it.q > 0 ? "k2" : "k0"}">${fmt(it.q)} on hand</span>`
+  : DATA.stock === "status" && it.k != null ? `<span class="st k${it.k}">${["Out","Low","In stock"][it.k]}</span>` : "";
+const terms = q => String(q||"").toLowerCase().split(/\s+/).filter(Boolean);
+const match = (it, ts) => { if (!ts.length) return true; const hay = [it.s, it.n, it.p, CAT.get(it.c)?.n].join(" ").toLowerCase(), hn = hay.replace(/[^a-z0-9]/g,"");
+  return ts.every(t => hay.includes(t) || (t.replace(/[^a-z0-9]/g,"").length >= 2 && hn.includes(t.replace(/[^a-z0-9]/g,"")))); };
+
+/* ---------- state ---------- */
+const S = {
+  screen: "pick", q: "", cat: "all",
+  me: ls.get("me", null),
+  cart: new Map(ls.get("cart", []).filter(([s]) => BY_SKU.has(s))),
+  writeIns: ls.get("writeins", []),
+  job: ls.get("job", ""), needed: dayStr(0), note: ls.get("note", ""),
+  orderId: ls.get("orderId", "") || newId(),
+  hist: ls.get("hist", [])
+};
+const save = () => { ls.set("cart", [...S.cart]); ls.set("writeins", S.writeIns); ls.set("job", S.job); ls.set("note", S.note); ls.set("orderId", S.orderId); };
+const lineCount = () => S.cart.size + S.writeIns.length;
+
+/* ---------- the order message ---------- */
+function techStr(){ return S.me ? [S.me.n ? "#" + S.me.n : "", S.me.m].filter(Boolean).join(" ") : "a tech"; }
+function orderCode(){
+  const l = [...S.cart].map(([s, q]) => [s, q]).concat(S.writeIns.map(w => ["", w.qty, w.name, w.unit || "ea"]));
+  return b64u(JSON.stringify({v:1, id:S.orderId, tn:S.me?.n || "", nm:S.me?.m || "", j:S.job, d:S.needed, n:S.note, ts:Date.now(), l}));
+}
+function pageBase(){
+  if (/^https?:$/.test(location.protocol)) return location.href.split("#")[0];
+  return DATA.url || "";
+}
+function buildMessage(short){
+  const code = orderCode(), base = pageBase(), ref = S.orderId.slice(-5).toUpperCase();
+  const cut = (s, n) => s.length > n ? s.slice(0, n - 1) + "…" : s;
+  const lines = [...S.cart].map(([s, q]) => { const it = BY_SKU.get(s); return `${fmt(q)} ${it.u}  ${s}  ${short ? cut(it.n, 34) : it.n}`; })
+    .concat(S.writeIns.map(w => `${fmt(w.qty)} ${w.unit || "ea"}  (write-in)  ${w.name}`));
+  const head = [`Material order from ${techStr()}`, S.job ? `Job: ${S.job}` : "", S.needed ? `Needed: ${fmtDay(S.needed)}` : "", `Ref: ${ref}`].filter(Boolean);
+  const link = base ? `Warehouse — click to add this order to Strandline:\n${base}#o=${code}` : `Warehouse — paste this code in Strandline (Orders > Add from link):\n${code}`;
+  const body = [...head, "", ...lines, ...(S.note ? ["", "Note: " + S.note] : []), "", link].join("\n");
+  const subject = `Material order ${ref} · ${techStr()}${S.job ? " · Job " + S.job : ""}`;
+  return {subject, body, code, ref};
+}
+/* Send buttons are real links (mailto:, sms:, Teams web link). Safari opens a tapped link reliably;
+   navigating from script after other work is what it tends to block. */
+function sendHref(via){
+  const m = buildMessage(via !== "email");
+  if (via === "email") return `mailto:${split(DATA.emails).join(",")}?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}`;
+  if (via === "text"){ const nums = split(DATA.phones).map(p => p.replace(/[^\d+]/g,"")).join(","); return `sms:${nums}${/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent) ? "&" : "?"}body=${encodeURIComponent(m.body)}`; }
+  if (via === "teams"){ const u = split(DATA.teams); return `https://teams.microsoft.com/l/chat/0/0?users=${encodeURIComponent(u.join(","))}${u.length > 1 ? "&topicName=" + encodeURIComponent("Material orders") : ""}&message=${encodeURIComponent(m.body)}`; }
+  return "#";
+}
+function refreshLinks(){ document.querySelectorAll("a[data-a=go]").forEach(a => { a.href = sendHref(a.dataset.v); }); }
+function ready(e){
+  if (!lineCount()){ e && e.preventDefault(); toast("Add at least one item."); return false; }
+  if (!S.me){ e && e.preventDefault(); S.screen = "who"; render(); return false; }
+  return true;
+}
+function afterSend(via){
+  S.lastMsg = buildMessage(via === "text" || via === "teams");
+  remember(S.lastMsg, via);
+  setTimeout(() => { S.screen = "sent"; S.sentVia = via; render(); window.scrollTo(0,0); }, 600);
+}
+function send(via){
+  if (!ready()) return;
+  const m = buildMessage(false);
+  remember(m, via); S.lastMsg = m;
+  if (via === "share"){
+    if (navigator.share) navigator.share({title: m.subject, text: m.body}).then(() => { S.screen = "sent"; S.sentVia = via; render(); }).catch(() => {});
+    return;
+  }
+  if (via === "copy"){ copy(m.body).then(ok => { S.copied = ok; S.screen = "sent"; S.sentVia = "copy"; render(); window.scrollTo(0,0); }); }
+}
+function remember(m, via){
+  const rec = {id:S.orderId, ts:Date.now(), ref:m.ref, job:S.job, n:lineCount(), via, subject:m.subject, body:m.body, cart:[...S.cart], writeIns:S.writeIns};
+  S.hist = [rec, ...S.hist.filter(h => h.id !== S.orderId)].slice(0, 15); ls.set("hist", S.hist);
+}
+function newOrder(){ S.cart.clear(); S.writeIns = []; S.job = ""; S.note = ""; S.needed = dayStr(0); S.orderId = newId(); S.q = ""; S.screen = "pick"; save(); render(); }
+
+/* ---------- screens ---------- */
+const FRAMED = (() => { try { return window.self !== window.top; } catch(e){ return true; } })();
+function header(){
+  const title = DATA.company || "Material order";
+  return `<header><div class="hrow"><div class="brand"><svg width="28" height="28" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="8" fill="#121923" stroke="#2C3D52"/><path d="M5 19c4-9 8 2 12-6s6-3 8-5" fill="none" stroke="#3CCFDD" stroke-width="2.2" stroke-linecap="round"/><path d="M5 23c4-6 8 1 12-4s6-2 8-3" fill="none" stroke="#F28C28" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <div style="min-width:0"><b>${esc(title)}</b><small>${DATA.company ? "Material order · " : ""}List from ${new Date(DATA.generatedAt).toLocaleDateString("en-US",{month:"short",day:"numeric"})}${DEMO ? " · preview" : ""}</small></div></div>
+    ${S.screen === "warehouse" ? "" : `<button class="me" data-a="who">${S.me ? esc(techStr()) : "Who's ordering?"}</button>`}</div>
+    ${S.screen === "pick" ? `<div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5C6E82" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>
+      <input id="q" type="search" placeholder="Search item, SKU or part #" value="${esc(S.q)}" autocomplete="off" enterkeyhint="search">${S.q ? `<button class="clr" data-a="clear" aria-label="Clear search">×</button>` : ""}</div>
+      ${(DATA.cats||[]).length > 1 || NEWN ? `<div class="chips" role="group" aria-label="Category"><button class="chip" data-a="cat" data-v="all" aria-pressed="${S.cat==="all"}">All</button>${NEWN ? `<button class="chip" data-a="cat" data-v="__new" aria-pressed="${S.cat==="__new"}"><i style="background:var(--ok)"></i>New (${NEWN})</button>` : ""}${DATA.cats.map(c => `<button class="chip" data-a="cat" data-v="${esc(c.id)}" aria-pressed="${S.cat===c.id}"><i style="background:${esc(c.col)}"></i>${esc(c.n)}</button>`).join("")}</div>` : ""}` : ""}
+  </header>${FRAMED || !/^https?:$/.test(location.protocol) ? `<div class="card" style="border-color:rgba(242,181,68,.4);color:#F6CF85;font-size:13.5px">${FRAMED ? "You're seeing a preview of this page, which may block sending. Open it in Safari or Chrome instead (Share → Open in Safari)." : "This page was opened from a saved file. If the send buttons don't open your apps, open the web link for this page instead, or use Copy order."}</div>` : ""}`;
+}
+function itemRow(it){
+  const q = S.cart.get(it.s) || 0, c = CAT.get(it.c);
+  return `<div class="it ${q ? "on" : ""}"><div class="it-t" data-a="inc" data-s="${esc(it.s)}"><div class="nm">${esc(it.n)}${it.nw ? '<span class="tag nw">New</span>' : ""}</div>
+    <div class="sub"><span class="sku">${esc(it.s)}</span> · ${esc(it.u)}${c && S.cat === "all" ? " · " + esc(c.n) : ""}${stockTxt(it) ? " · " + stockTxt(it) : ""}</div></div>
+    ${q ? `<div class="step"><button data-a="dec" data-s="${esc(it.s)}" aria-label="Less">−</button><input type="number" inputmode="decimal" min="0" step="any" value="${q}" data-qty="${esc(it.s)}" aria-label="Quantity"><button data-a="inc" data-s="${esc(it.s)}" aria-label="More">+</button></div>`
+        : `<button class="add" data-a="inc" data-s="${esc(it.s)}">+ Add</button>`}</div>`;
+}
+function listHtml(){
+  const ts = terms(S.q);
+  const all = DATA.items.filter(it => (S.cat === "all" || (S.cat === "__new" ? it.nw : it.c === S.cat)) && match(it, ts));
+  if (ts.length){ const k = S.q.trim().toLowerCase(); all.sort((a,b) => (b.s.toLowerCase() === k) - (a.s.toLowerCase() === k) || (b.n.toLowerCase().startsWith(k)) - (a.n.toLowerCase().startsWith(k))); }
+  const max = 250, shown = all.slice(0, max);
+  return (shown.length ? shown.map(itemRow).join("") : `<div class="more">Nothing matches “${esc(S.q)}”.</div>`)
+    + (all.length > max ? `<div class="more">Showing ${max} of ${all.length}. Search to narrow it down.</div>` : "")
+    + `<div class="more">Can't find it? <button class="rm" data-a="review">Add a write-in on the next screen</button></div>`;
+}
+function pickScreen(){ return header() + `<div class="list" id="list">${listHtml()}</div>`; }
+function barHtml(){
+  if (S.screen !== "pick") return "";
+  const n = lineCount();
+  return `<div class="bar"><div class="in"><div><b>${n} item${n===1?"":"s"}</b><div class="sub">${n ? "in this order" : "Tap items to add them"}</div></div>
+    <button class="btn primary" data-a="review" ${n ? "" : "disabled"}>Review &amp; send →</button></div></div>`;
+}
+function whoScreen(){
+  const ts = DATA.techs || [];
+  return header() + `<h2>Who's ordering?</h2><p class="note">Saved on this phone, so you only do this once.</p>
+  <div class="card">
+    ${ts.length ? `<div class="f"><label for="w-sel">Pick your name</label><select id="w-sel"><option value="">— Choose —</option>${ts.map((t,i) => `<option value="${i}" ${S.me && S.me.n === t.n && S.me.m === t.m ? "selected" : ""}>${esc(t.n ? "#" + t.n + " · " : "")}${esc(t.m)}</option>`).join("")}<option value="other">I'm not on the list</option></select></div>` : ""}
+    <div id="w-man" ${ts.length ? 'hidden' : ""}><div class="row2"><div class="f"><label for="w-n">Tech #</label><input id="w-n" inputmode="numeric" value="${esc(S.me?.n||"")}"></div><div class="f"><label for="w-m">Name</label><input id="w-m" autocomplete="name" value="${esc(S.me?.m||"")}"></div></div></div>
+    <div class="sends"><button class="btn primary wide" data-a="who-save">Continue</button>${S.me ? `<button class="btn ghost wide" data-a="back">Cancel</button>` : ""}</div>
+  </div>
+  ${S.hist.length ? `<div class="card"><b>Orders sent from this phone</b>${S.hist.map((h,i) => `<div class="hist"><div><div>${esc(h.ref)}${h.job ? " · Job " + esc(h.job) : ""}</div><div class="sub">${new Date(h.ts).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})} · ${h.n} item${h.n===1?"":"s"} · ${esc(h.via)}</div></div><button class="btn" data-a="again" data-i="${i}">Order again</button></div>`).join("")}</div>` : ""}`;
+}
+function reviewScreen(){
+  const rows = [...S.cart].map(([s, q]) => { const it = BY_SKU.get(s);
+    return `<div class="it"><div class="it-t"><div class="nm">${esc(it.n)}</div><div class="sub"><span class="sku">${esc(s)}</span> · ${esc(it.u)}${stockTxt(it) ? " · " + stockTxt(it) : ""}</div><button class="rm" data-a="rm" data-s="${esc(s)}">Remove</button></div>
+      <div class="step"><button data-a="dec" data-s="${esc(s)}" aria-label="Less">−</button><input type="number" inputmode="decimal" min="0" step="any" value="${q}" data-qty="${esc(s)}" aria-label="Quantity"><button data-a="inc" data-s="${esc(s)}" aria-label="More">+</button></div></div>`; }).join("")
+    + S.writeIns.map((w, i) => `<div class="it"><div class="it-t"><div class="nm">${esc(w.name)}<span class="tag">Write-in</span></div><div class="sub">${fmt(w.qty)} ${esc(w.unit||"ea")}</div><button class="rm" data-a="rm-w" data-i="${i}">Remove</button></div></div>`).join("");
+  const has = k => split(DATA[k]).length;
+  return header() + `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2>Review order</h2><button class="btn ghost" data-a="back">← Add more</button></div>
+  <div class="card" style="padding-top:2px">${rows || `<div class="more">No items yet.</div>`}
+    <details style="margin-top:12px"><summary class="note" style="cursor:pointer">+ Something not on the list</summary>
+      <div class="f"><label for="wi-n">What do you need?</label><input id="wi-n" placeholder="Describe it"></div>
+      <div class="row2"><div class="f"><label for="wi-q">Qty</label><input id="wi-q" type="number" inputmode="decimal" min="0" step="any" value="1"></div>
+        <div class="f"><label for="wi-u">Unit</label><select id="wi-u">${["ea","ft","box","bag","roll","reel","spool","pair","kit","case"].map(u => `<option>${u}</option>`).join("")}</select></div></div>
+      <div class="sends"><button class="btn" data-a="add-w">Add write-in</button></div></details></div>
+  <div class="card">
+    <div class="f" style="margin-top:0"><label for="r-job">Job / work order #</label><input id="r-job" value="${esc(S.job)}" autocomplete="off"></div>
+    <div class="f"><label>Needed</label><div class="seg"><button data-a="day" data-v="0" aria-pressed="${S.needed===dayStr(0)}">Today</button><button data-a="day" data-v="1" aria-pressed="${S.needed===dayStr(1)}">Tomorrow</button></div>
+      <input id="r-date" type="date" value="${esc(S.needed)}" style="margin-top:6px"></div>
+    <div class="f"><label for="r-note">Note for the warehouse</label><textarea id="r-note" placeholder="Pickup time, truck #, anything else">${esc(S.note)}</textarea></div>
+  </div>
+  <div class="sends">
+    ${has("teams") ? `<a class="btn teams wide" data-a="go" data-v="teams" href="#" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6.5l10-1.7v14.4L3 17.5zM6 9.3v1.4h1.7v4.6h1.6v-4.6H11V9.3z"/><circle cx="17.5" cy="6.5" r="2.2"/><path d="M14 9.5h6.3c.4 0 .7.3.7.7v4.6a3.3 3.3 0 01-6.6.4H14z"/></svg>Send in Teams</a>` : ""}
+    ${has("emails") ? `<a class="btn primary wide" data-a="go" data-v="email" href="#">Email the warehouse</a>` : ""}
+    ${has("phones") ? `<a class="btn ${has("emails") ? "" : "primary"} wide" data-a="go" data-v="text" href="#">Text the warehouse</a>` : ""}
+    <div class="row2">${navigator.share ? `<button class="btn ghost" data-a="send" data-v="share">Share… (Mail, Messages, Teams)</button>` : ""}<button class="btn ghost" data-a="send" data-v="copy" ${navigator.share ? "" : 'style="grid-column:1/-1"'}>Copy order</button></div>
+  </div>
+  <p class="note" style="text-align:center;margin-top:14px">Sending as ${esc(techStr())} · <button class="rm" data-a="who">change</button></p>`;
+}
+function sentScreen(){
+  const m = S.lastMsg || buildMessage(false);
+  const app = {email:"Your email app", text:"Messages", teams:"Teams", share:"The app you picked"}[S.sentVia] || "Your app";
+  const lead = S.sentVia === "copy" ? (S.copied ? "The order is copied. Paste it into a message to the warehouse and send it." : "Copy the order below, then paste it into a message to the warehouse.")
+    : `${esc(app)} should have opened with the order filled in. <b>Tap send there</b> to finish.`;
+  return header() + `<div class="card" style="text-align:center;margin-top:20px"><div class="big ok">✓</div>
+    <h2>Almost done</h2><p class="note">${lead}</p>
+    <div class="sends"><button class="btn primary wide" data-a="new">Start a new order</button><button class="btn ghost wide" data-a="review">Back to this order</button></div></div>
+  <div class="card"><b>${S.sentVia === "copy" ? "Your order" : "Didn't open?"}</b>
+    <p class="note" style="margin:4px 0 8px">${S.sentVia === "copy" ? "" : "Copy this and send it to the warehouse any way you like: text, email or Teams. "}Warehouse: ${esc([DATA.phones, DATA.emails].filter(Boolean).join(" · ") || "see your supervisor")}</p>
+    <textarea id="msg" readonly style="width:100%;min-height:200px;background:var(--bg);border:1px solid var(--line-2);border-radius:10px;padding:10px;font:13px/1.4 ui-monospace,Consolas,monospace;color:var(--fg)">${esc(m.body)}</textarea>
+    <div class="sends"><button class="btn wide" data-a="copy-msg">Copy message</button></div></div>`;
+}
+function warehouseScreen(){
+  let p = null; try { p = JSON.parse(unb64u(location.hash.match(/o=([A-Za-z0-9_\-]+)/)[1])); } catch(e){}
+  if (!p || p.v !== 1 || !Array.isArray(p.l)) return header() + `<div class="card"><h2>This order link is incomplete</h2><p class="note">It may have been cut off. Ask the tech to send the order again.</p></div>`;
+  const code = location.hash.match(/o=([A-Za-z0-9_\-]+)/)[1];
+  const rows = p.l.map(r => { const it = BY_SKU.get(r[0]); return `<tr><td>${it ? `<div>${esc(it.n)}</div><div class="sub"><span class="sku">${esc(r[0])}</span></div>` : r[0] ? `<div class="sku">${esc(r[0])}</div>` : `<div>${esc(r[2])}<span class="tag">Write-in</span></div>`}</td><td class="q">${fmt(r[1])} ${esc(it ? it.u : r[3] || "ea")}</td></tr>`; }).join("");
+  return header() + `<h2>Order from ${esc([p.tn ? "#" + p.tn : "", p.nm].filter(Boolean).join(" ") || "a tech")}</h2>
+    <p class="note">${[p.j ? "Job " + esc(p.j) : "", p.d ? "Needed " + esc(fmtDay(p.d)) : "", "Sent " + new Date(p.ts).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}), "Ref " + esc(String(p.id).slice(-5).toUpperCase())].filter(Boolean).join(" · ")}</p>
+    <div class="card"><table>${rows}</table>${p.n ? `<p style="white-space:pre-wrap"><b>Note:</b> ${esc(p.n)}</p>` : ""}</div>
+    <div class="sends"><a class="btn primary wide" href="strandline://order?o=${code}">Add to Strandline</a><button class="btn wide" data-a="copy-code">Copy order code</button></div>
+    <p class="note">Open this on the warehouse PC that has Strandline. Your browser will ask to open Strandline; allow it, and the order appears under Orders. If nothing happens, copy the code and paste it in Strandline under <b>Orders → Add from link</b>.</p>
+    <div class="code" id="code">${esc(code)}</div>`;
+}
+
+/* ---------- render & events ---------- */
+function render(){
+  if (/[#&]o=/.test(location.hash)) S.screen = "warehouse";
+  else if (!S.me && S.screen !== "who") S.screen = "who";
+  const fn = {pick:pickScreen, who:whoScreen, review:reviewScreen, sent:sentScreen, warehouse:warehouseScreen}[S.screen] || pickScreen;
+  $("#app").innerHTML = fn(); $("#bar").innerHTML = barHtml();
+  if (S.screen === "review") refreshLinks();
+  if (S.screen === "who"){ const sel = $("#w-sel"); if (sel) sel.onchange = () => { $("#w-man").hidden = sel.value !== "other"; }; }
+}
+function refreshList(){ const l = $("#list"); if (l) l.innerHTML = listHtml(); $("#bar").innerHTML = barHtml(); }
+function setQty(s, q){
+  q = Math.max(0, Math.round((+q || 0) * 100) / 100);
+  if (q > 0) S.cart.set(s, q); else S.cart.delete(s);
+  save();
+  if (S.screen === "pick") refreshList(); else render();
+}
+function syncReview(){ if ($("#r-job")){ S.job = $("#r-job").value.trim(); S.note = $("#r-note").value.trim(); S.needed = $("#r-date").value || ""; save(); } }
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-a]"); if (!t) return;
+  const a = t.dataset.a, s = t.dataset.s;
+  if (S.screen === "review") syncReview();
+  switch (a){
+    case "inc": setQty(s, (S.cart.get(s) || 0) + 1); break;
+    case "dec": setQty(s, (S.cart.get(s) || 0) - 1); break;
+    case "rm": setQty(s, 0); break;
+    case "rm-w": S.writeIns.splice(+t.dataset.i, 1); save(); render(); break;
+    case "add-w": { const n = $("#wi-n").value.trim(), q = +$("#wi-q").value; if (!n){ toast("Describe the item."); break; } if (!(q > 0)){ toast("Enter a quantity."); break; }
+      S.writeIns.push({name:n.slice(0,160), qty:q, unit:$("#wi-u").value}); save(); render(); toast("Write-in added."); break; }
+    case "cat": S.cat = t.dataset.v; render(); break;
+    case "clear": S.q = ""; render(); $("#q")?.focus(); break;
+    case "review": S.screen = "review"; render(); window.scrollTo(0,0); break;
+    case "back": S.screen = "pick"; render(); break;
+    case "who": S.screen = "who"; render(); break;
+    case "who-save": {
+      const sel = $("#w-sel");
+      if (sel && sel.value !== "" && sel.value !== "other"){ const tch = DATA.techs[+sel.value]; S.me = {n:tch.n, m:tch.m}; }
+      else { const n = ($("#w-n")?.value||"").trim(), m = ($("#w-m")?.value||"").trim(); if (!m && !n){ toast("Enter your tech # and name."); break; } S.me = {n, m}; }
+      ls.set("me", S.me); S.screen = lineCount() ? "review" : "pick"; render(); break; }
+    case "day": S.needed = dayStr(+t.dataset.v); render(); break;
+    case "send": send(t.dataset.v); break;
+    case "go": if (!ready(e)) break; t.href = sendHref(t.dataset.v); afterSend(t.dataset.v); break;
+    case "copy-msg": { const ta = $("#msg"); const txt = ta.value; copy(txt).then(ok => { if (ok) toast("Copied."); else { ta.focus(); ta.setSelectionRange(0, txt.length); toast("Selected. Tap Copy."); } }); break; }
+    case "new": newOrder(); window.scrollTo(0,0); break;
+    case "again": { const h = S.hist[+t.dataset.i]; if (!h) break; S.cart = new Map((h.cart||[]).filter(([s]) => BY_SKU.has(s))); S.writeIns = h.writeIns || []; S.job = ""; S.note = ""; S.orderId = newId(); save(); S.screen = "review"; render(); break; }
+    case "copy-code": copy($("#code").textContent).then(ok => toast(ok ? "Code copied." : "Select the code below and copy it.")); break;
+  }
+});
+document.addEventListener("input", e => {
+  if (S.screen === "review" && /^r-/.test(e.target.id || "")){ syncReview(); refreshLinks(); }
+  if (e.target.id === "q"){ S.q = e.target.value; refreshList(); const c = document.querySelector(".clr"); if (!!S.q !== !!c){ const pos = e.target.selectionStart; render(); const q = $("#q"); q.focus(); q.setSelectionRange(pos, pos); } }
+});
+document.addEventListener("change", e => {
+  if (e.target.dataset.qty){ if (S.screen === "review") syncReview(); setQty(e.target.dataset.qty, e.target.value); }
+  if (e.target.id === "r-date" && S.screen === "review"){ syncReview(); render(); }
+});
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id === "q") e.target.blur(); });
+window.addEventListener("hashchange", () => { if (!/[#&]o=/.test(location.hash) && S.screen === "warehouse") S.screen = "pick"; render(); });
+render();
+})();
+</script>
+</body>
+</html>
